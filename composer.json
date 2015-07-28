@@ -1,0 +1,19 @@
+{
+	"name": "vladshish/usershell",
+	"description": "Additional tools for create, complete and set permission for users, groups in CakePHP applications.",
+	"type": "cakephp-plugin",
+	"keywords": ["cakephp", "user", "group", "shell"],
+	"homepage": "https://github.com/vladshish/usershell",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Vlad Shish",
+			"email": "vladshish89@gmail.com",
+			"role": "Author"
+		}
+	],
+	"require": {
+		"php": ">=5.2.17",
+		"composer/installers": "*"
+	}
+}
