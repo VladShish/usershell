@@ -39,6 +39,7 @@ class UserShell extends Shell {
 		$this->stdout->styles('ok', array('text' => 'green', 'blink' => true));
 	}
 
+
 	/**
 	 * Init groups
 	 */
@@ -51,10 +52,21 @@ class UserShell extends Shell {
 	}
 
 	/**
-	 * Init groups
+	 * Complete groups
 	 */
 	public function complete() {
 		if ($this->_UsersOperator->complete()) {
+			$this->out('<ok>' . $this->_UsersOperator->getSuccessMessages() . '<ok>');
+		} else {
+			$this->out('<warning>' . $this->_UsersOperator->getErrorMessages() . '</warning>');
+		}
+	}
+
+	/**
+	 * Update groups
+	 */
+	public function update() {
+		if ($this->_UsersOperator->update()) {
 			$this->out('<ok>' . $this->_UsersOperator->getSuccessMessages() . '<ok>');
 		} else {
 			$this->out('<warning>' . $this->_UsersOperator->getErrorMessages() . '</warning>');
@@ -80,6 +92,12 @@ class UserShell extends Shell {
 					'options' => array(),
 				),
 				'help' => __('Complete users')
+			))
+			->addSubcommand('update', array(
+				'parser' => array(
+					'options' => array(),
+				),
+				'help' => __('Update users')
 			));
 	}
 

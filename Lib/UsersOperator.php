@@ -43,6 +43,15 @@ class UsersOperator extends AOperator {
 		return true;
 	}
 
+	public function update() {
+		if ($this->_checkComplete()) {
+			return false;
+		}
+
+		$this->_updateUsers();
+		return true;
+	}
+
 	protected function _checkComplete() {
 		if (!Configure::check('Users.data')) {
 			$this->setErrorMessage(__('Users configure settings is absent'));
@@ -62,10 +71,22 @@ class UsersOperator extends AOperator {
 		$this->setSuccessMessage(__('Users has been completed'));
 	}
 
+	protected function _updateUsers() {
+		$users = Configure::read('Users.data');
+		foreach ($users as $user) {
+			$this->_User->save($user);
+		}
+
+		$this->setSuccessMessage(__('All Users has been updated'));
+	}
+
 	protected function _isUserExists($user) {
-		return (boolean)$this->_User->find('count', array('conditions' => array(
-			$this->_User->alias . '.id' => $user['id'],
-		)) + Configure::read('Users.conditions'));
+		return (boolean)$this->_User->find('count',
+			array(
+				'conditions' => [$this->_User->alias . '.id' => $user['id']]
+			) +
+			Configure::read('Users.conditions')
+		);
 	}
 
 }
