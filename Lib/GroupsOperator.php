@@ -104,10 +104,12 @@ class GroupsOperator extends AOperator {
 	}
 
 	protected function _isGroupExists($group) {
-		return (boolean)$this->_Group->find('count', array('conditions' => array(
-			'id' => $group['id'],
-		)));
+		return (boolean)$this->_Group->find('count', array(
+			'conditions' => ['id' => $group['id']],
+			'recursive' => -1,
+		));
 	}
+
 
 	protected function _assignPermissions() {
 		foreach (Configure::read('Groups.permissions') as $rights) {
